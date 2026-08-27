@@ -1,0 +1,8 @@
+{
+  "name": "MediaFlux",
+  "description": "All-in-One Media Downloader Toolkit with advanced 3D reactive UI and SEO optimization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .glow-red {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+  }
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+  }
+  .grad-bg {
+    background: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #020617 70%);
+  }
+  .tool-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
