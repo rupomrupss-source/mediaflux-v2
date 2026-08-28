@@ -13,21 +13,34 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Please provide a valid YouTube URL' });
   }
 
-  // আসল ডাউনলোডের মতো ২ সেকেন্ডের ফেক লোডিং টাইম
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  try {
+    // Cobalt-এর মতো আনলিমিটেড এবং ফ্রি Open API কল করা হচ্ছে
+    const apiUrl = `https://api.nyxs.pw/dl/yt-direct?url=${encodeURIComponent(url)}`;
+    
+    const response = await fetch(apiUrl);
+    const data = await response.json();
 
-  // আপনার ফ্রন্টএন্ডকে খুশি করার জন্য ডেমো সাকসেস ডেটা
-  return res.status(200).json({
-    title: "MediaFlux Pro Video - Success!",
-    thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=640&auto=format&fit=crop",
-    duration: "04:20",
-    formats: [
-      { quality: "1080p (Premium HD)", url: "#" },
-      { quality: "720p (Standard)", url: "#" }
-    ],
-    audioOnly: [
-      { bitrate: 320, url: "#" },
-      { bitrate: 128, url: "#" }
-    ]
-  });
+    // API থেকে ডেটা না পেলে
+    if (!data || !data.result) {
+      return res.status(500).json({ error: 'Could not extract video data. Video might be private.' });
+    }
+
+    // আপনার 3D ডিজাইনের জন্য আসল ডেটাগুলো সুন্দর করে সাজানো
+    const responseData = {
+      title: data.result.title || "MediaFlux Ready to Download",
+      thumbnail: data.result.thumbnail || "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=640&auto=format&fit=crop",
+      duration: data.result.duration || "Auto",
+      formats: [
+        { quality: "Download MP4 Video", url: data.result.urlVideo }
+      ],
+      audioOnly: [
+        { bitrate: 320, url: data.result.urlAudio }
+      ]
+    };
+
+    return res.status(200).json(responseData);
+
+  } catch (error) {
+    return res.status(500).json({ error: 'Server error: Unlimited API connection failed.' });
+  }
 }
